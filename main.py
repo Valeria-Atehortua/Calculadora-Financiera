@@ -1,77 +1,15 @@
-ANCHO=40
-
-def mostrar_menu():
-    print("=" * ANCHO)
-    print("CALCULADORA FINANCIERA".center(ANCHO))
-    print("=" * ANCHO)
-    print()
-    print("1. Interés simple")
-    print("2. Interés compuesto")
-    print("3. Salir")
-
-    opcion=int(input("Seleccione la opción que desea realizar: "))
-    return opcion
-
-def solicitar_datos():
-
-    capital = float(input("Ingrese el capital inicial: "))
-    tasa_interes = float(input("Ingrese el porcentaje de la tasa de interés: "))
-    tiempo = float(input("Ingrese el tiempo en años: "))
-
-    return capital, tasa_interes, tiempo
-
-def mostrar_datos(capital, tasa_interes, tiempo):
-
-    print("=" * ANCHO)
-    print("DATOS INGRESADOS".center(ANCHO))
-    print("=" * ANCHO)
-    
-    print(f"Capital: ${capital:,.2f}")
-    print(f"Tasa: {tasa_interes:,.2f}%")
-    print(f"Tiempo: {tiempo} años")
-
-def mostrar_resultados(capital, interes, monto_final):
-    print("=" * ANCHO)
-    print("RESULTADOS".center(ANCHO))
-    print("=" * ANCHO)
-    print(f"\nCapital inicial: ${capital:,.2f}")
-    print(f"Interés generado: ${interes:,.2f}")
-    print(f"Monto final: ${monto_final:,.2f}")
-    
-    input("\nPresione Enter para volver al menú...")
-
-def interes_simple():
-    print("Elegiste interés simple")
-
-    capital, tasa_interes, tiempo= solicitar_datos()
-    mostrar_datos(capital, tasa_interes, tiempo)
-
-    tasa_interes /= 100
-    interes = capital * tasa_interes * tiempo
-    monto_final = capital + interes
-
-    mostrar_resultados(capital, interes, monto_final)
-
-def interes_compuesto():
-    print("Elegiste interés compuesto")
-
-    capital, tasa_interes, tiempo= solicitar_datos()
-    mostrar_datos(capital, tasa_interes, tiempo)
-
-    tasa_interes /= 100
-    monto_final = capital * (1 + tasa_interes) ** tiempo
-    interes = monto_final - capital
-
-    mostrar_resultados(capital, interes, monto_final)
+from interfaz import mostrar_menu, mostrar_datos, mostrar_resultados
+from utilidades import solicitar_datos
+from calculos import interes_simple, interes_compuesto
 
 def main():
     while True:
-        opcion=mostrar_menu()
+        opcion = mostrar_menu()
         if opcion == 1:
             interes_simple()
-        elif opcion==2:
+        elif opcion == 2:
             interes_compuesto()
-        elif opcion==3:
+        elif opcion == 3:
             print("Hasta luego.")
             break
         else:
