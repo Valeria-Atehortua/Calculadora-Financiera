@@ -12,12 +12,15 @@ def mostrar_menu():
     opcion=int(input("Seleccione la opción que desea realizar: "))
     return opcion
 
-def interes_simple():
-    print("Elegiste interés simple")
+def solicitar_datos():
 
     capital = float(input("Ingrese el capital inicial: "))
     tasa_interes = float(input("Ingrese el porcentaje de la tasa de interés: "))
     tiempo = float(input("Ingrese el tiempo en años: "))
+
+    return capital, tasa_interes, tiempo
+
+def mostrar_datos(capital, tasa_interes, tiempo):
 
     print("=" * ANCHO)
     print("DATOS INGRESADOS".center(ANCHO))
@@ -26,47 +29,40 @@ def interes_simple():
     print(f"Capital: ${capital:,.2f}")
     print(f"Tasa: {tasa_interes:,.2f}%")
     print(f"Tiempo: {tiempo} años")
+
+def mostrar_resultados(capital, interes, monto_final):
+    print("=" * ANCHO)
+    print("RESULTADOS".center(ANCHO))
+    print("=" * ANCHO)
+    print(f"\nCapital inicial: ${capital:,.2f}")
+    print(f"Interés generado: ${interes:,.2f}")
+    print(f"Monto final: ${monto_final:,.2f}")
+    
+    input("\nPresione Enter para volver al menú...")
+
+def interes_simple():
+    print("Elegiste interés simple")
+
+    capital, tasa_interes, tiempo= solicitar_datos()
+    mostrar_datos(capital, tasa_interes, tiempo)
 
     tasa_interes /= 100
     interes = capital * tasa_interes * tiempo
     monto_final = capital + interes
 
-    print("=" * ANCHO)
-    print("RESULTADOS".center(ANCHO))
-    print("=" * ANCHO)
-    print(f"\nCapital inicial: ${capital:,.2f}")
-    print(f"Interés generado: ${interes:,.2f}")
-    print(f"Monto final: ${monto_final:,.2f}")
-    
-    input("\nPresione Enter para volver al menú...")
+    mostrar_resultados(capital, interes, monto_final)
 
 def interes_compuesto():
     print("Elegiste interés compuesto")
 
-    capital = float(input("Ingrese el capital inicial: "))
-    tasa_interes = float(input("Ingrese el porcentaje de la tasa de interés: "))
-    tiempo = float(input("Ingrese el tiempo en años: "))
-
-    print("=" * ANCHO)
-    print("DATOS INGRESADOS".center(ANCHO))
-    print("=" * ANCHO)
-    
-    print(f"Capital: ${capital:,.2f}")
-    print(f"Tasa: {tasa_interes:,.2f}%")
-    print(f"Tiempo: {tiempo} años")
+    capital, tasa_interes, tiempo= solicitar_datos()
+    mostrar_datos(capital, tasa_interes, tiempo)
 
     tasa_interes /= 100
     monto_final = capital * (1 + tasa_interes) ** tiempo
     interes = monto_final - capital
 
-    print("=" * ANCHO)
-    print("RESULTADOS".center(ANCHO))
-    print("=" * ANCHO)
-    print(f"\nCapital inicial: ${capital:,.2f}")
-    print(f"Interés generado: ${interes:,.2f}")
-    print(f"Monto final: ${monto_final:,.2f}")
-    
-    input("\nPresione Enter para volver al menú...")
+    mostrar_resultados(capital, interes, monto_final)
 
 def main():
     while True:
