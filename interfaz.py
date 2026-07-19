@@ -8,10 +8,25 @@ def mostrar_menu():
     print()
     print("1. Interés simple")
     print("2. Interés compuesto")
-    print("3. Salir")
+    print("3. Comparar inversiones")
+    print("4. Salir")
 
     opcion=int(input("Seleccione la opción que desea realizar: "))
     return opcion
+
+def mostrar_menu_tipo_interes():
+    while True:
+        print("=" * ANCHO)
+        print("TIPO DE INTERÉS".center(ANCHO))
+        print("=" * ANCHO)
+        print()
+        print("1. Interés simple")
+        print("2. Interés compuesto")
+        tipo = int(input("Ingrese la opción deseada: "))
+        if tipo != 1 and tipo != 2:
+            print("La opción no es valida.")
+        else:
+            return tipo
 
 def mostrar_datos(capital, tasa_interes, tiempo):
 
@@ -24,7 +39,7 @@ def mostrar_datos(capital, tasa_interes, tiempo):
     print(f"Tiempo: {tiempo} años")
 
 def mostrar_resultados(capital, interes, monto_final):
-    
+
     print("=" * ANCHO)
     print("RESULTADOS".center(ANCHO))
     print("=" * ANCHO)
