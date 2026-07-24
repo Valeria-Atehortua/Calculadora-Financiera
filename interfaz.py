@@ -28,13 +28,13 @@ def mostrar_menu_tipo_interes():
         else:
             return tipo
 
-def mostrar_datos(capital, tasa_interes, tiempo):
+def mostrar_datos(nombre_principal, valor_principal, tasa_interes, tiempo):
 
     print("=" * ANCHO)
     print("DATOS INGRESADOS".center(ANCHO))
     print("=" * ANCHO)
     
-    print(f"Capital: ${capital:,.2f}")
+    print(f"{nombre_principal}: ${valor_principal:,.2f}")
     print(f"Tasa: {tasa_interes:,.2f}%")
     print(f"Tiempo: {tiempo} años")
 

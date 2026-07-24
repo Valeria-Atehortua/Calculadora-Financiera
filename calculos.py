@@ -19,15 +19,15 @@ def calcular_interes_compuesto(capital, tasa_interes, tiempo):
 def interes_simple():
     print("Elegiste interés simple")
 
-    capital, tasa_interes, tiempo = solicitar_datos()
-    mostrar_datos(capital, tasa_interes, tiempo)
+    valor_principal, tasa_interes, tiempo = solicitar_datos("Capital inicial")
+    mostrar_datos(valor_principal, tasa_interes, tiempo)
     interes, monto_final = calcular_interes_simple(
-        capital,
+        valor_principal,
         tasa_interes,
         tiempo
         )
     resultados = {
-            "Capital inicial": capital,
+            "Capital inicial": valor_principal,
             "Interés generado": interes,
             "Monto final": monto_final
         }
@@ -37,15 +37,15 @@ def interes_simple():
 def interes_compuesto():
     print("Elegiste interés compuesto")
 
-    capital, tasa_interes, tiempo = solicitar_datos()
-    mostrar_datos(capital, tasa_interes, tiempo)
+    valor_principal, tasa_interes, tiempo = solicitar_datos("Capital inicial")
+    mostrar_datos(valor_principal, tasa_interes, tiempo)
     interes, monto_final = calcular_interes_compuesto(
-        capital,
+        valor_principal,
         tasa_interes,
         tiempo
         )
     resultados = {
-            "Capital inicial": capital,
+            "Capital inicial": valor_principal,
             "Interés generado": tasa_interes,
             "Monto final": monto_final
             }
@@ -88,16 +88,40 @@ def comparar_inversiones():
 def valor_futuro():
     print("Elegiste valor futuro")
     
-    capital, tasa_interes, tiempo = solicitar_datos()
-    mostrar_datos(capital, tasa_interes, tiempo)
+    valor_principal, tasa_interes, tiempo = solicitar_datos("Capital inicial")
+    mostrar_datos(valor_principal, tasa_interes, tiempo)
     _, monto_final = calcular_interes_compuesto(
-        capital,
+        valor_principal,
         tasa_interes,
         tiempo
         )
     resultados = {
-            "Capital invertido": capital,
+            "Capital invertido": valor_principal,
             "Valor futuro": monto_final
+            }
+    
+    mostrar_resultados(resultados)
+
+def calcular_valor_presente(valor_futuro, tasa_interes, tiempo):
+    tasa_interes /= 100
+    valor_presente = valor_futuro / (1 + tasa_interes) ** tiempo 
+
+    return valor_presente
+
+def valor_presente():
+    print("Elegiste valor presente")
+        
+    valor_principal, tasa_interes, tiempo = solicitar_datos("Valor futuro deseado")
+    mostrar_datos("Valor futuro deseado", valor_principal, tasa_interes, tiempo)
+    valor_futuro = valor_principal
+    valor_presente = calcular_valor_presente(
+        valor_futuro,
+        tasa_interes,
+        tiempo
+        )
+    resultados = {
+            "Valor futuro": valor_futuro,
+            "Valor presente": valor_presente
             }
     
     mostrar_resultados(resultados)
