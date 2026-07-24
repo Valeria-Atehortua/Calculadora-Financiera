@@ -26,11 +26,13 @@ def interes_simple():
         tasa_interes,
         tiempo
         )
-    mostrar_resultados(
-        capital,
-        interes,
-        monto_final
-        )
+    resultados = {
+            "Capital inicial": capital,
+            "Interés generado": interes,
+            "Monto final": monto_final
+        }
+    
+    mostrar_resultados(resultados)
 
 def interes_compuesto():
     print("Elegiste interés compuesto")
@@ -42,11 +44,13 @@ def interes_compuesto():
         tasa_interes,
         tiempo
         )
-    mostrar_resultados(
-        capital,
-        interes,
-        monto_final
-        )
+    resultados = {
+            "Capital inicial": capital,
+            "Interés generado": tasa_interes,
+            "Monto final": monto_final
+            }
+    
+    mostrar_resultados(resultados)
 
 def obtener_monto_final():
     tipo = mostrar_menu_tipo_interes()
@@ -80,3 +84,20 @@ def comparar_inversiones():
     else:
         print("Las dos inversiones generan el mismo monto final.")
     print(f"Diferencia: ${diferencia:,.2f}")
+
+def valor_futuro():
+    print("Elegiste valor futuro")
+    
+    capital, tasa_interes, tiempo = solicitar_datos()
+    mostrar_datos(capital, tasa_interes, tiempo)
+    _, monto_final = calcular_interes_compuesto(
+        capital,
+        tasa_interes,
+        tiempo
+        )
+    resultados = {
+            "Capital invertido": capital,
+            "Valor futuro": monto_final
+            }
+    
+    mostrar_resultados(resultados)
