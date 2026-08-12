@@ -1,6 +1,5 @@
-from interfaz import mostrar_menu, mostrar_datos, mostrar_resultados
-from utilidades import solicitar_datos
-from calculos import interes_simple, interes_compuesto, comparar_inversiones, valor_futuro
+from interfaz import mostrar_menu
+from calculos import interes_simple, interes_compuesto, comparar_inversiones, valor_futuro, amortizacion_frances
 opciones_principal=[
     "Inversiones",
     "Préstamos",
@@ -12,9 +11,15 @@ opciones_inversiones=[
     "Interés simple", 
     "Interés compuesto", 
     "Comparar inversiones",
-    "Valor futuro" 
+    "Valor futuro", 
     "Salir"
     ]
+
+opciones_prestamos=[
+    "Amortización francesa",
+    "Salir"
+    ]
+
 def main():
     while True:
         opcion_principal = mostrar_menu("CALCULADORA FINANCIERA", opciones_principal)
@@ -35,11 +40,14 @@ def main():
 
 
         if opcion_principal == 2:
-            interes_simple()
-        elif opcion_principal == 2:
-            interes_compuesto()
+            while True:
+                opcion_prestamos = mostrar_menu("PRÉSTAMOS", opciones_prestamos)
+                if opcion_prestamos == 1:
+                    amortizacion_frances()
+                elif opcion_prestamos == 2:
+                    break
         elif opcion_principal == 3:
-            comparar_inversiones()
+            interes_compuesto()
         elif opcion_principal == 4:
             print("Hasta luego.")
             break

@@ -1,16 +1,18 @@
-from interfaz import mostrar_datos, mostrar_resultados, mostrar_menu_tipo_interes
+from interfaz import mostrar_datos, mostrar_resultados, mostrar_menu_tipo_interes, mostrar_tabla_amortizacion
 from utilidades import solicitar_datos
 ANCHO = 40
+MESES_ANUALES = 12
+PORCENTAJE = 100
 def calcular_interes_simple(capital, tasa_interes, tiempo):
 
-    tasa_interes /= 100
+    tasa_interes /= PORCENTAJE
     interes = capital * tasa_interes * tiempo
     monto_final = capital + interes
 
     return interes, monto_final
 
 def calcular_interes_compuesto(capital, tasa_interes, tiempo):
-    tasa_interes /= 100
+    tasa_interes /= PORCENTAJE
     monto_final = capital * (1 + tasa_interes) ** tiempo
     interes = monto_final - capital
 
@@ -20,7 +22,7 @@ def interes_simple():
     print("Elegiste interés simple")
 
     valor_principal, tasa_interes, tiempo = solicitar_datos("Capital inicial")
-    mostrar_datos(valor_principal, tasa_interes, tiempo)
+    mostrar_datos("Capital inicial", valor_principal, tasa_interes, tiempo)
     interes, monto_final = calcular_interes_simple(
         valor_principal,
         tasa_interes,
@@ -38,7 +40,7 @@ def interes_compuesto():
     print("Elegiste interés compuesto")
 
     valor_principal, tasa_interes, tiempo = solicitar_datos("Capital inicial")
-    mostrar_datos(valor_principal, tasa_interes, tiempo)
+    mostrar_datos("Capital inicial", valor_principal, tasa_interes, tiempo)
     interes, monto_final = calcular_interes_compuesto(
         valor_principal,
         tasa_interes,
@@ -46,7 +48,7 @@ def interes_compuesto():
         )
     resultados = {
             "Capital inicial": valor_principal,
-            "Interés generado": tasa_interes,
+            "Interés generado": interes,
             "Monto final": monto_final
             }
     
@@ -54,7 +56,7 @@ def interes_compuesto():
 
 def obtener_monto_final():
     tipo = mostrar_menu_tipo_interes()
-    capital, tasa_interes, tiempo = solicitar_datos()
+    capital, tasa_interes, tiempo = solicitar_datos("Capital inicial")
     if tipo == 1:
         _, monto_final = calcular_interes_simple(capital, tasa_interes, tiempo)
     else: 
@@ -89,7 +91,7 @@ def valor_futuro():
     print("Elegiste valor futuro")
     
     valor_principal, tasa_interes, tiempo = solicitar_datos("Capital inicial")
-    mostrar_datos(valor_principal, tasa_interes, tiempo)
+    mostrar_datos("Capital inicial", valor_principal, tasa_interes, tiempo)
     _, monto_final = calcular_interes_compuesto(
         valor_principal,
         tasa_interes,
@@ -103,7 +105,7 @@ def valor_futuro():
     mostrar_resultados(resultados)
 
 def calcular_valor_presente(valor_futuro, tasa_interes, tiempo):
-    tasa_interes /= 100
+    tasa_interes /= PORCENTAJE
     valor_presente = valor_futuro / (1 + tasa_interes) ** tiempo 
 
     return valor_presente
@@ -125,3 +127,61 @@ def valor_presente():
             }
     
     mostrar_resultados(resultados)
+
+def calcular_amortizacion_frances(monto, tasa, tiempo):
+    tabla = []
+    tasa /= PORCENTAJE
+
+    tasa_mensual = tasa / MESES_ANUALES
+    numero_cuotas = int(tiempo * MESES_ANUALES)
+
+    if tasa_mensual == 0:
+        cuota = monto / numero_cuotas
+    else:
+        factor = (1 + tasa_mensual) ** numero_cuotas
+
+        cuota = monto * (
+            tasa_mensual * factor
+        ) / (
+            factor - 1
+        )
+
+    saldo = monto
+
+    total_pagado = 0
+    total_intereses = 0
+    for numero_cuota in range(1, numero_cuotas + 1):
+        interes = saldo * tasa_mensual
+        abono_capital = cuota - interes
+        saldo -= abono_capital
+
+        cuota_actual = {
+            "Número de cuota": numero_cuota,
+            "Pago": cuota,
+            "Interés": interes,
+            "Abono a capital": abono_capital,
+            "Saldo": saldo
+        }
+        tabla.append(cuota_actual)
+        total_pagado += cuota
+        total_intereses += interes
+    return tabla, total_pagado, total_intereses
+
+def amortizacion_frances():
+    print("Elegiste amortización francesa")
+    monto_prestamo, tasa_interes, tiempo = solicitar_datos("Monto del préstamo")
+    mostrar_datos("Monto del préstamo", monto_prestamo, tasa_interes, tiempo)
+
+    tabla, total_pagado, total_intereses = calcular_amortizacion_frances(
+    monto_prestamo,
+    tasa_interes,
+    tiempo
+    )
+    mostrar_tabla_amortizacion(tabla)
+    
+    resultados = {
+    "Total pagado": total_pagado,
+    "Total intereses": total_intereses
+    }
+    mostrar_resultados(resultados)
+

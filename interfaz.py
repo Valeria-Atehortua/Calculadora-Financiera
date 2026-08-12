@@ -1,4 +1,5 @@
-ANCHO=40
+ANCHO = 40
+ANCHO_TABLA = 71
 
 def mostrar_menu(titulo, opciones):
     while True:
@@ -50,3 +51,24 @@ def mostrar_resultados(resultados):
             print(f"{etiqueta}: ${valor}")
     
     input("\nPresione Enter para volver al menú...")
+
+def mostrar_tabla_amortizacion(tabla):
+    print("=" * ANCHO_TABLA)
+    print("TABLA DE AMORTIZACIÓN".center(ANCHO_TABLA))
+    print("=" * ANCHO_TABLA)
+
+    print(
+    f"{'Cuota':<8}"
+    f"{'Pago':>15}"
+    f"{'Interés':>15}"
+    f"{'Abono capital':>18}"
+    f"{'Saldo':>15}"
+    )
+    for cuota in tabla:
+        print(
+            f"{cuota['Número de cuota']:<8}"
+            f"{'$' + format(cuota['Pago'], ',.2f'):>15}"
+            f"{'$' + format(cuota['Interés'], ',.2f'):>15}"
+            f"{'$' + format(cuota['Abono a capital'], ',.2f'):>18}"
+            f"{'$' + format(cuota['Saldo'], ',.2f'):>15}"
+        )
